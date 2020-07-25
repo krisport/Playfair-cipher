@@ -20,16 +20,28 @@ function arrayUnique(value,index,self){
 }
 function encript(key,text){
 	let text1, text2, text3;
-	if (text.length%2==0) {
+	
 		text1 = text.toLowerCase();
 		text2 = text1.replace(/\s+/g,'');
-		text3 = text2.match(/.{1,2}/g);
-	}else{
-		let text0 = text+"x";
-		text1 = text0.toLowerCase();
-		text2 = text1.replace(/\s+/g,'');
-		text3 = text2.match(/.{1,2}/g);
-	}
+		
+		let splittedText = text2.split("");
+		text2 = "";
+		for (let i = 0; i < splittedText.length; i++) {
+			if (i+1 == splittedText.length) {
+				text2 += splittedText[i];
+				break;
+			}
+			if (splittedText[i] == splittedText[i+1]) {
+				splittedText[i] = splittedText[i] + "x";
+			}
+			text2 += splittedText[i];
+		}
+		if (text2.length % 2 == 0) {
+		    text3 = text2.match(/.{1,2}/g);
+		} else {
+		    let text0 = text2 + "x";
+		    text3 = text0.match(/.{1,2}/g);
+		}
 	let num = 0, keyObj = [];
 	keyArr = generateKeyTable(key);
 	for (let i = 0; i < keyArr.length; i++) {
@@ -113,4 +125,4 @@ function encript(key,text){
     return newWordStr
 }
 
-console.log(encript("a lot of", "I am drinking water"));
+console.log(encript("playfair example", "Hide the gold in the tree stump"));

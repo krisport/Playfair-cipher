@@ -22,11 +22,10 @@ function removePunctuation(text){
 	let splittedText = text.split(""), returnedText = "";
 	for (let i = 0; i < splittedText.length; i++) {
 	 	let letterCharCode = splittedText[i].charCodeAt(0);
-	 	if (letterCharCode > 65 && letterCharCode < 90 || letterCharCode > 97 && letterCharCode < 122) {
+	 	if (letterCharCode >= 65 && letterCharCode <= 90 || letterCharCode >= 97 && letterCharCode <= 122) {
 	 		returnedText += splittedText[i];
 	 	}
 	 } 
-	 console.log(returnedText);
 	 return returnedText;
 }
 function encript(key,text){
@@ -133,7 +132,6 @@ function encript(key,text){
             }
         }
     }
-    return newWordStr
+    return newWordStr;
 }
 
-console.log(encript("playfair example", "Hide the gold in the tree stump."));

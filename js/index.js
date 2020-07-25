@@ -18,9 +18,20 @@ function generateKeyTable(key){
 function arrayUnique(value,index,self){
 	return self.indexOf(value) === index;
 }
+function removePunctuation(text){
+	let splittedText = text.split(""), returnedText = "";
+	for (let i = 0; i < splittedText.length; i++) {
+	 	let letterCharCode = splittedText[i].charCodeAt(0);
+	 	if (letterCharCode > 65 && letterCharCode < 90 || letterCharCode > 97 && letterCharCode < 122) {
+	 		returnedText += splittedText[i];
+	 	}
+	 } 
+	 console.log(returnedText);
+	 return returnedText;
+}
 function encript(key,text){
 	let text1, text2, text3;
-	
+	text = removePunctuation(text);
 		text1 = text.toLowerCase();
 		text2 = text1.replace(/\s+/g,'');
 		
@@ -125,4 +136,4 @@ function encript(key,text){
     return newWordStr
 }
 
-console.log(encript("playfair example", "Hide the gold in the tree stump"));
+console.log(encript("playfair example", "Hide the gold in the tree stump."));

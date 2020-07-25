@@ -1,13 +1,7 @@
-function stringToLow (key){
-	return key.toLowerCase();
-}
-function removeSpaces(key){
-	return key.replace(/\s+/g,'');
-}
 function generateKeyTable(key){
 	let str, arr, alphabet, finalArr = [], num = 0;
-	key = stringToLow(key);
-	key =  removeSpaces(key);
+	    key = key.toLowerCase();
+    key = key.replace(/\s+/g, '');
 	alphabet = "abcdefghiklmnopqrstuvwxyz";
 	str = key + alphabet;
 	arr = str.split("").filter(arrayUnique);
@@ -47,8 +41,10 @@ function encript(key,text){
 			num++;
 		}
 	}
+	let  newWord = [];
+	num = 0;
 	for (textInd in text3) {
-        let chars = [], x = {}, y = {}, xNew = {}, yNew = {}, newWord = [];
+        let chars = [], x = {}, y = {}, xNew = {}, yNew = {};
 		chars = text3[textInd].split("");
 		for (ind in keyObj) {
 			if (keyObj[ind].value == chars[0]) {
@@ -71,67 +67,50 @@ function encript(key,text){
 				yNew.row = y.row;
 				yNew.col = y.col - (y.col - x.col);	
 			}
-		}else if (x.row == y.row) {
-			if (x.col > y.col) {
-				if (y.row+1 > 4) {
-					yNew.row = 0;
-				}else{
-					yNew.row = y.row +  1;
-				}
-				yNew.col = x.col;
-				if (x.col+1 > 4) {
-					xNew.col = 0;
-				}else{
-					xNew.col = x.col + 1;
-				}
-				xNew.row = x.row;
-			}else if (y.col > x.col) {
-				if (x.row+1 > 4) {
-					xNew.row = 0;
-				}else{
-					xNew.row = x.row +  1;
-				}
-				xNew.col = y.col;
-				if (yNew.col+1 > 4) {
-					yNew.col = 0;
-				}else{
-					yNew.col = y.col + 1;
-				}
-				yNew.row = y.row;
-			}
-		}else if (x.col == y.col) {
-			if (x.row > y.row) {
-				if (y.row+1 > 4) {
-					yNew.row = 0;
-				}else{
-					yNew.row = y.row +  1;
-				}
-			yNew.col = y.col;
-			if (x.row+1 > 4) {
-				xNew.row = 0;
-			}else{
-				xNew.row = x.row +  1;
-			}
-			xNew.col = x.col;
-		}else if (y.row > x.row) {
-			if (x.row+1 > 4) {
-				xNew.row = 0;
-			}else{
-				xNew.row = x.row +  1;
-			}
-			xNew.col = x.col;
-			if (yNew.row+1 > 4) {
-				yNew.row = 0;
-			}else{
-				yNew.row = y.row +  1;
-			}
-			yNew.col = y.col;
-		}
-			
-		}
-		console.log(xNew, yNew);
-	}
-return keyObj;
+		} else if (x.row == y.row) {
+            if (y.col + 1 > 4) {
+                yNew.col = 0;
+            } else {
+                yNew.col = y.col + 1;
+            }
+            yNew.row = x.row;
+            if (x.col + 1 > 4) {
+                xNew.col = 0;
+            } else {
+                xNew.col = x.col + 1;
+            }
+            xNew.row = x.row;
+        } else if (x.col == y.col) {
+            if (y.row + 1 > 4) {
+                yNew.row = 0;
+            } else {
+                yNew.row = y.row + 1;
+            }
+            yNew.col = y.col;
+            if (x.row + 1 > 4) {
+                xNew.row = 0;
+            } else {
+                xNew.row = x.row + 1;
+            }
+            xNew.col = x.col;
+
+        }
+        newWord[num] = {};
+        newWord[num] = xNew;
+        num += 1;
+        newWord[num] = {};
+        newWord[num] = yNew;
+        num += 1;
+    }
+    let newWordStr = "";
+    for (index in newWord) {
+        for (let i = 0; i < keyObj.length; i++) {
+            if (keyObj[i].row == newWord[index].row && keyObj[i].col == newWord[index].col) {
+                newWordStr += keyObj[i].value;
+            }
+        }
+    }
+    return newWordStr
 }
 
-console.log(encript("comedy", "I Watch films every day"));
+console.log(encript("a lot of", "I am drinking water"));
